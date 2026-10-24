@@ -25,5 +25,5 @@ jobs:
 
     - name: Run Bot
       run: |
-        python "checkerbot.py"
+        python "main.py"
         
