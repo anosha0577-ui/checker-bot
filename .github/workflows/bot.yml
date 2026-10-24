@@ -1,6 +1,6 @@
 name: Run Mail Checker Bot
 
-on: 
+on:
   workflow_dispatch:
   schedule:
     - cron: '*/10 * * * *'
@@ -26,3 +26,4 @@ jobs:
     - name: Run Bot
       run: |
         python "checkerbot.py"
+        
