@@ -180,6 +180,7 @@ def animate_check(chat_id, email, stop_event, frames_per_sec=2.5):
         else:
             edit_message(B, A[_C], E)
     return F
+
 def get_updates(offset=_A):
     try:
         A = requests.get(f"{API_URL}/getUpdates", params={'timeout': 30, 'offset': offset}, timeout=35)
@@ -391,4 +392,4 @@ if __name__ == '__main__':
     ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 {reset}""")
     run_bot()
-                    
+        
