@@ -1,716 +1,394 @@
-import requests
-import random
-import string
-import time
-import sys
-import os
-import json
-import uuid
-import base64
-import secrets
-from threading import Thread, Lock
-from datetime import datetime
-import subprocess
-from hashlib import md5
+_l = '📢 𝐉ᴏɪɴ 𝐂ʜᴀɴɴᴇʟ'
+_k = 'mode_bulk'
+_j = 'mode_single'
+_i = 'reply_markup'
+_h = 'parse_mode'
+_g = 'chat_id'
+_f = 'result'
+_e = 'application/x-www-form-urlencoded'
+_d = 'Origin'
+_c = 'Content-Type'
+_b = 'https://hi2.in/'
+_a = 'en-US,en;q=0.5'
+_Z = 'application/json, text/plain, */*'
+_Y = 'Accept-Language'
+_X = 'Accept'
+_W = 'hi2.in'
+_V = '\x1b[38;5;195m'
+_U = '\x1b[38;5;159m'
+_T = '\x1b[38;5;117m'
+_S = '\x1b[38;5;213m'
+_R = '\x1b[38;5;183m'
+_Q = '\x1b[1m'
+_P = '\x1b[0m'
+_O = 'back_menu'
+_N = 'https://t.me/ruthless_era'
+_M = 'url'
+_L = 'message_id'
+_K = 'Referer'
+_J = 'callback_data'
+_I = True
+_H = 'inline_keyboard'
+_G = 'not_taken'
+_F = 'User-Agent'
+_E = 'taken'
+_D = '@'
+_C = 'id'
+_B = 'text'
+_A = None
 
-
-try:
-    import httpx
-except:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "httpx", "httpx[http2]"])
-    import httpx
-
+import requests, random, time, sys, os, json, threading
 try:
     from colorama import Fore, Style, init
     init()
 except:
-    os.system("pip install colorama")
+    os.system('pip install colorama')
     from colorama import Fore, Style, init
 
+reset = _P
+bold = _Q
+spy1 = _R
+spy2 = _S
+spy3 = _T
+spy4 = '\x1b[38;5;157m'
+spy5 = '\x1b[38;5;219m'
+spy6 = '\x1b[38;5;147m'
+spy7 = _U
+spy8 = '\x1b[38;5;225m'
+spy9 = _V
+spy10 = '\x1b[38;5;121m'
+spy11 = '\x1b[38;5;216m'
+spy12 = '\x1b[38;5;222m'
+spy13 = '\x1b[38;5;189m'
+spy14 = '\x1b[38;5;211m'
+spy15 = '\x1b[38;5;151m'
+spy16 = '\x1b[38;5;223m'
+spy17 = '\x1b[38;5;200m'
+spy18 = _V
+spy19 = '\x1b[38;5;230m'
+spy20 = _S
+spy21 = '\x1b[38;5;105m'
+spy22 = _T
+spy23 = '\x1b[38;5;228m'
+spy24 = '\x1b[38;5;170m'
+spy25 = '\x1b[38;5;114m'
+spy26 = '\x1b[38;5;224m'
+spy27 = _R
+spy28 = '\x1b[38;5;208m'
+spy29 = _U
+spy30 = '\x1b[38;5;220m'
 
-reset = "\033[0m"
-fg_red     = "\033[1;31m"
-fg_green   = "\033[1;32m"
-fg_yellow  = "\033[1;33m"
-fg_blue    = "\033[1;34m"
-fg_magenta = "\033[1;35m"
-fg_cyan    = "\033[1;36m"
-fg_white   = "\033[1;37m"
-fg_lavender = "\033[1;38;5;183m"
-fg_gold     = "\033[1;38;5;220m"
-fg_pink     = "\033[1;38;5;213m"
-fg_sky      = "\033[1;38;5;117m"
-fg_orange   = "\033[1;38;5;208m"
-fg_teal     = "\033[1;38;5;37m"
-fg_lavender = "\033[38;5;183m"
-fg_mint = "\033[38;5;121m"
-fg_red = "\033[38;5;196m"
-fg_green = "\033[38;5;82m"
-fg_gold = "\033[38;5;220m"
-fg_white = "\033[38;5;255m"
-fg_cyan = "\033[38;5;51m"
-fg_magenta = "\033[38;5;201m"
-reset = "\033[0m"
-bold = "\033[1m"
-
-
-BOT_TOKEN = "8987246001:AAFPhsq5CQI-Gx6rbVUE3YtN8uX9WTNNl9w"
+BOT_TOKEN = "8414789575:AAGsWua1vkI6BtFcssd3h3JS2F760SFE-wQ"
 API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
+SUPPORTED_DOMAINS = [_W, 'telegmail.com']
+RECAPTCHA_SITEKEY = '6LfEUPkgAAAAAKTgbMoewQkWBEQhO2VPL4QviKct'
+RECAPTCHA_CO = 'aHR0cHM6Ly9oaTIuaW46NDQz'
+RECAPTCHA_V = 'XrIDux0s7SoNe6_IHkjGC92W'
+USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 OPR/108.0.0.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0',
+    'Mozilla/5.0 (Linux; Android 13; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Mobile Safari/537.36'
+]
+DEFAULT_COOKIES = {
+    '__eoi': 'ID=84791c9b377760ae:T=1785815548:RT=1792303549:S=AA-AfjbAwxHu8AEDm58GilHT3t8P',
+    '__gads': 'ID=d35d042016429679:T=1785815548:RT=1792303548:S=ALNI_MZSbvQNM9tUxE_CmZnXbUQWGG3kdQ',
+    '__gpi': 'UID=0000145fbef21f84:T=1785815548:RT=1792303549:S=ALNI_MY_LJgZNcPDvOPq2U5kNuOWvCQotQ',
+    '_ga': 'GA1.1.1815008449.1785815546',
+    '_ga_02VF9D5F26': 'GS2.1.s1792303540$o18$g0$t1792303540$j60$l0$h0',
+    'FCCDCF': '[null,null,null,null,null,null,[[32,"[\\\"42eb93fe-68c7-4034-96db-c13bb605dd03\\\",[1785815556,751000000]]"]]]',
+    'FCNEC': '[["AKsRol8RF5LPgmRao6cebT6eoNufsXC40Wwgytn794ql_B5zzX--7wmkvDU6Esk0nXehFzYvJZ2jRdoE9CPO20HK1fSnQ8aIrv0vxQGTzJXI38I3eBti2LaIXRtHZiYACNxOjS3mWLkn0GetUYHYnWDfEOvrLJkhyQ=="]]'
+}
 
+def build_session(seed_cookies=_I):
+    A = requests.Session()
+    A.headers.update({_F: random.choice(USER_AGENTS), _X: _Z, _Y: _a, 'Accept-Encoding': 'gzip, deflate, br', 'Connection': 'keep-alive', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-origin', 'TE': 'trailers'})
+    if seed_cookies:
+        for (B, C) in DEFAULT_COOKIES.items():
+            A.cookies.set(B, C, domain=_W)
+    return A
 
-def generate_android_ua():
-    devices = [
-        {"brand": "samsung", "model": "SM-G973F", "device": "beyond1", "board": "exynos9820"},
-        {"brand": "Google", "model": "Pixel 7", "device": "panther", "board": "panther"},
-        {"brand": "Xiaomi", "model": "Redmi Note 10", "device": "sweet", "board": "sm6150"},
-        {"brand": "OnePlus", "model": "ONEPLUS A6003", "device": "OnePlus6", "board": "sdm845"},
-    ]
-    device = random.choice(devices)
-    android_version = random.choice(["12", "13", "14"])
-    api_level = {"12": "31", "13": "33", "14": "34"}[android_version]
-    dpi = random.choice(["320", "450", "480"])
-    instagram_ver = f"{random.randint(300, 370)}.0.0.{random.randint(10, 40)}.{random.randint(80, 150)}"
-    locale = random.choice(["en_US", "en_IN", "en_GB"])
-    return (f"Instagram {instagram_ver} Android ({api_level}/{android_version}; "
-            f"{dpi}dpi; 1080x2207; {device['brand']}; {device['model']}; "
-            f"{device['device']}; {device['board']}; {locale}; {random.randint(300000000, 400000000)})")
-
-def gen_uuid():
-    return str(uuid.uuid4())
-
-
-def solve_recaptcha_hi2():
+def solve_recaptcha_hi2(session):
+    F = 'resp","'; E = 'recaptcha-token" value="'; A = session
     try:
-        anchor_url = "https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LfEUPkgAAAAAKTgbMoewQkWBEQhO2VPL4QviKct&co=aHR0cHM6Ly9oaTIuaW46NDQz&hl=en&v=XrIDux0s7SoNe6_IHkjGC92W&size=invisible"
-        params = anchor_url.split('?')[1]
-        r = requests.get(f'https://www.google.com/recaptcha/enterprise/anchor?{params}', timeout=10)
-        recaptcha_token = r.text.split('recaptcha-token" value="')[1].split('"')[0]
-        payload = f"v={params.split('v=')[1].split('&')[0]}&reason=q&c={recaptcha_token}&k=6LfEUPkgAAAAAKTgbMoewQkWBEQhO2VPL4QviKct&co=aHR0cHM6Ly9oaTIuaW46NDQz&hl=en&size=invisible"
-        headers = {
-            "User-Agent": "Mozilla/5.0",
-            "Referer": f"https://www.google.com/recaptcha/enterprise/anchor?{params}",
-            "Content-Type": "application/x-www-form-urlencoded"
-        }
-        resp = requests.post('https://www.google.com/recaptcha/enterprise/reload', data=payload, headers=headers, timeout=10)
-        token = resp.text.split('resp","')[1].split('"')[0]
-        return token
-    except:
-        return None
+        B = f"https://www.google.com/recaptcha/api2/anchor?ar=1&k={RECAPTCHA_SITEKEY}&co={RECAPTCHA_CO}&hl=en&v={RECAPTCHA_V}&size=invisible"
+        C = A.get(B, timeout=12, headers={_F: random.choice(USER_AGENTS), _K: _b})
+        if E not in C.text: return
+        G = C.text.split(E)[1].split('"')[0]
+        H = f"v={RECAPTCHA_V}&reason=q&c={G}&k={RECAPTCHA_SITEKEY}&co={RECAPTCHA_CO}&hl=en&size=invisible"
+        I = {_F: random.choice(USER_AGENTS), _K: B, _c: _e, _d: 'https://www.google.com'}
+        D = A.post('https://www.google.com/recaptcha/enterprise/reload', data=H, headers=I, timeout=12)
+        if F not in D.text: return
+        return D.text.split(F)[1].split('"')[0]
+    except Exception:
+        return
 
-
-def check_hi2_registration(email):
-    
-    if "@" in email:
-        domain = email.split("@")[1]
-        prefix = email.split("@")[0]
-    else:
-        return None
-
-    solve = solve_recaptcha_hi2()
-    if not solve:
-        return None
-
-    data = {
-        'domain': domain,
-        'prefix': prefix,
-        'recaptcha': solve,
-    }
-    headers = {
-        'User-Agent': "Mozilla/5.0",
-        'Accept': "application/json, text/plain, */*",
-        'authorization': "Basic bnVsbA==",
-    }
+def check_hi2_email(email):
+    J = 'available'; I = 'already taken'; F = email; E = 'unknown'
+    if _D not in F: return E
+    K, C = F.split(_D, 1)
+    C = C.lower()
+    D = build_session()
+    G = solve_recaptcha_hi2(D)
+    if not G: return E
+    L = {_F: D.headers[_F], _X: _Z, _Y: _a, _c: _e, 'Authorization': 'Basic bnVsbA==', _d: 'https://hi2.in', _K: _b}
+    M = {'domain': C, 'prefix': K, 'recaptcha': G}
     try:
-        response = requests.post("https://hi2.in/api/custom", data=data, headers=headers, timeout=15)
-        res = response.json()
-        if "already taken" in str(res):
-            return True
-        else:
-            return False
-    except:
-        return None
+        H = D.post('https://hi2.in/api/custom', headers=L, data=M, timeout=15)
+        B = H.text.lower()
+        if I in B or _E in B and '"error"' not in B:
+            try:
+                A = H.json()
+                if isinstance(A, dict):
+                    if A.get('error') and _E in str(A).lower(): return _E
+                    if A.get(J) is False: return _E
+                    if A.get(J) is _I: return _G
+            except Exception: 0
+            if I in B: return _E
+            return _G
+        return _G
+    except Exception:
+        return E
 
+SPINNER = ['✦', '✶', '✷', '✸', '✹', '✺', '✻', '✼', '★', '✧']
 
-def check_instagram_registration(email):
-    
-    try:
-        url = "https://i.instagram.com/api/v1/users/check_email/"
-        ua = generate_android_ua()
-        response = httpx.Client(http2=True).post(
-            url,
-            data=f"email={email}",
-            headers={
-                'User-Agent': ua,
-                'content-type': "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            timeout=15
-        )
-        if 'email_is_taken' in response.text:
-            return True
-        return False
-    except:
-        return None
-
-
-def check_bloks_registration(email):
-    
-    try:
-        url = "https://i.instagram.com/api/v1/bloks/async_action/com.bloks.www.caa.ar.search.async/"
-        device = str(uuid.uuid4())
-        family = str(uuid.uuid4())
-        android = "android-" + secrets.token_hex(8)
-        payload = {
-            'params': '{"client_input_params":{"aac":"{\\"aac_init_timestamp\\":' + str(int(time.time())) + ',\\"aacjid\\":\\"' + str(uuid.uuid4()) + '\\",\\"aaccs\\":\\"' + secrets.token_urlsafe(32) + '\\"}","flash_call_permissions_status":{"READ_PHONE_STATE":"PERMANENTLY_DENIED","READ_CALL_LOG":"DENIED","ANSWER_PHONE_CALLS":"DENIED"},"was_headers_prefill_available":0,"network_bssid":null,"sfdid":"","fetched_email_token_list":{},"search_query":"' + email + '","auth_secure_device_id":"","ig_oauth_token":[],"cloud_trust_token":null,"was_headers_prefill_used":0,"sso_accounts_auth_data":[],"encrypted_msisdn":"","device_network_info":null,"text_input_id":"akyuf0:61","zero_balance_state":null,"android_build_type":"release","accounts_list":[],"is_oauth_without_permission":0,"ig_android_qe_device_id":"' + device + '","gms_incoming_call_retriever_eligibility":"client_not_supported","search_screen_type":"email_or_username","is_whatsapp_installed":1,"lois_settings":{"lois_token":""},"ig_vetted_device_nonce":null,"headers_infra_flow_id":"","fetched_email_list":[]},"server_params":{"event_request_id":"' + str(uuid.uuid4()) + '","is_from_logged_out":0,"layered_homepage_experiment_group":null,"device_id":"' + android + '","login_surface":"login_home","waterfall_id":"' + str(uuid.uuid4()) + '","INTERNAL__latency_qpl_instance_id":6.3987980400102E13,"is_platform_login":0,"context_data":"","login_entry_point":"logged_out","INTERNAL__latency_qpl_marker_id":36707139,"family_device_id":"' + family + '","offline_experiment_group":"caa_iteration_v3_perf_ig_4","access_flow_version":"pre_mt_behavior","is_from_logged_in_switcher":0,"qe_device_id":"' + device + '"}}',
-            'bk_client_context': '{"bloks_version":"5e47baf35c5a270b44c8906c8b99063564b30ef69779f3dee0b828bee2e4ef5b","styles_id":"instagram"}',
-            'bloks_versioning_id': "5e47baf35c5a270b44c8906c8b99063564b30ef69779f3dee0b828bee2e4ef5b"
-        }
-        headers = {
-            'User-Agent': "Instagram 370.1.0.43.96 Android (34/14; 450dpi; 1080x2207; samsung; SM-A235F; a23; qcom; en_IN; 704872281)",
-            'accept-language': "en-IN, en-US",
-            'x-bloks-version-id': "5e47baf35c5a270b44c8906c8b99063564b30ef69779f3dee0b828bee2e4ef5b",
-            'x-fb-friendly-name': "IgApi: bloks/async_action/com.bloks.www.caa.ar.search.async/",
-            'x-ig-android-id': android,
-            'x-ig-app-id': "567067343352427",
-            'x-ig-app-locale': "en_IN",
-            'x-ig-device-id': device,
-            'x-ig-family-device-id': family,
-            'x-ig-timezone-offset': str(datetime.now().astimezone().utcoffset().total_seconds()),
-            'x-mid': base64.urlsafe_b64encode(secrets.token_bytes(18)).decode().rstrip('='),
-            'x-pigeon-rawclienttime': str(time.time()),
-            'x-pigeon-session-id': f"UFS-{uuid.uuid4()}-0",
-        }
-        response = requests.post(url, data=payload, headers=headers, timeout=20)
-        if email in response.text:
-            return True
-        return False
-    except:
-        return None
-
-
-def check_email_availability(email, domain):
-    
-    
-    ig_result = check_instagram_registration(email)
-    if ig_result is True:
-        return "taken"
-    elif ig_result is False:
-        
-        if domain == "hi2.in":
-            hi2_result = check_hi2_registration(email)
-            if hi2_result is True:
-                return "taken"
-            elif hi2_result is False:
-                return "not_taken"
+def animate_check(chat_id, email, stop_event, frames_per_sec=2.5):
+    C = stop_event; B = chat_id; A = {_C: _A}
+    def E():
+        D = 0
+        while not C.is_set():
+            F = SPINNER[D % len(SPINNER)]
+            E = f"<blockquote><b>⚡ 𝐒ᴄᴀɴɴɪɴɢ 𝐃ᴀᴛᴀʙᴀsᴇ</b></blockquote>\n\n╭─ <b>ᴛᴀʀɢᴇᴛ :</b> <code>{email}</code>\n╰─ <b>sᴛᴀᴛᴜs :</b> <i>ᴠᴇʀɪғʏɪɴɢ...</i> <b>[{F}]</b>"
+            if A[_C] is _A:
+                G = send_message(B, E)
+                A[_C] = G
             else:
-                
-                return "not_taken"
+                edit_message(B, A[_C], E)
+            D += 1
+            time.sleep(1 / frames_per_sec)
+    D = threading.Thread(target=E, daemon=_I)
+    D.start()
+    def F(result_text):
+        E = result_text
+        C.set()
+        D.join(timeout=2)
+        if A[_C] is _A:
+            send_message(B, E)
         else:
-            return "not_taken"
-    else:
-        
-        bloks_result = check_bloks_registration(email)
-        if bloks_result is True:
-            return "taken"
-        elif bloks_result is False:
-            if domain == "hi2.in":
-                hi2_result = check_hi2_registration(email)
-                if hi2_result is True:
-                    return "taken"
-                elif hi2_result is False:
-                    return "not_taken"
-            return "not_taken"
-        else:
-           
-            if domain == "hi2.in":
-                hi2_result = check_hi2_registration(email)
-                if hi2_result is True:
-                    return "taken"
-                elif hi2_result is False:
-                    return "not_taken"
-            return "unknown"
-
-
-def get_updates(offset=None):
-    url = f"{API_URL}/getUpdates"
-    params = {"timeout": 30, "offset": offset}
+            edit_message(B, A[_C], E)
+    return F
+def get_updates(offset=_A):
     try:
-        resp = requests.get(url, params=params, timeout=35)
-        return resp.json().get("result", [])
-    except:
+        A = requests.get(f"{API_URL}/getUpdates", params={'timeout': 30, 'offset': offset}, timeout=35)
+        return A.json().get(_f, [])
+    except Exception:
         return []
 
-def send_message(chat_id, text, parse_mode="HTML", reply_markup=None):
-    url = f"{API_URL}/sendMessage"
-    data = {"chat_id": chat_id, "text": text, "parse_mode": parse_mode}
-    if reply_markup:
-        data["reply_markup"] = json.dumps(reply_markup)
+def send_message(chat_id, text, parse_mode='HTML', reply_markup=_A):
+    A = reply_markup; B = {_g: chat_id, _B: text, _h: parse_mode}
+    if A: B[_i] = json.dumps(A)
     try:
-        requests.post(url, data=data, timeout=10)
-    except:
-        pass
+        C = requests.post(f"{API_URL}/sendMessage", data=B, timeout=10).json()
+        return C.get(_f, {}).get(_L)
+    except Exception:
+        return
 
-def edit_message(chat_id, message_id, text, parse_mode="HTML", reply_markup=None):
-    
-    url = f"{API_URL}/editMessageText"
-    data = {"chat_id": chat_id, "message_id": message_id, "text": text, "parse_mode": parse_mode}
-    if reply_markup:
-        data["reply_markup"] = json.dumps(reply_markup)
+def edit_message(chat_id, message_id, text, parse_mode='HTML', reply_markup=_A):
+    A = reply_markup; B = {_g: chat_id, _L: message_id, _B: text, _h: parse_mode}
+    if A: B[_i] = json.dumps(A)
     try:
-        requests.post(url, data=data, timeout=10)
-    except:
-        pass
+        requests.post(f"{API_URL}/editMessageText", data=B, timeout=10)
+    except Exception:
+        0
 
-def answer_callback(update_id, callback_query_id, text=None, show_alert=False):
-    
-    url = f"{API_URL}/answerCallbackQuery"
-    data = {"callback_query_id": callback_query_id}
-    if text:
-        data["text"] = text
-        data["show_alert"] = show_alert
+def answer_callback(callback_query_id, text=_A, show_alert=False):
+    A = {'callback_query_id': callback_query_id}
+    if text: A[_B] = text; A['show_alert'] = show_alert
     try:
-        requests.post(url, data=data, timeout=10)
-    except:
-        pass
+        requests.post(f"{API_URL}/answerCallbackQuery", data=A, timeout=10)
+    except Exception:
+        0
 
 def send_welcome(chat_id):
-    
-    msg = (
-        "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-        "║   𝐇𝐈2 & 𝐓𝐄𝐋𝐄𝐆𝐌𝐀𝐈𝐋 𝐂𝐇𝐄𝐂𝐊𝐄𝐑   ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║       𝐒𝐄𝐋𝐄𝐂𝐓 𝐌𝐎𝐃𝐄 𝐁𝐄𝐋𝐎𝐖       ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  【1】 𝐒𝐢𝐧𝐠𝐥𝐞 𝐂𝐡𝐞𝐜𝐤         ║\n"
-        "║  → 𝐂𝐡𝐞𝐜𝐤 𝟏 𝐮𝐬𝐞𝐫𝐧𝐚𝐦𝐞/𝐞𝐦𝐚𝐢𝐥     ║\n"
-        "║                              ║\n"
-        "║  【2】 𝐁𝐮𝐥𝐤 𝐂𝐡𝐞𝐜𝐤           ║\n"
-        "║  → 𝐂𝐡𝐞𝐜𝐤 𝐦𝐮𝐥𝐭𝐢𝐩𝐥𝐞 𝐞𝐦𝐚𝐢𝐥𝐬    ║\n"
-        "║  → 𝐅𝐨𝐫𝐦𝐚𝐭: hi21 hi2mail2    ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  𝐅𝐨𝐥𝐥𝐨𝐰 𝐨𝐮𝐫 𝐜𝐡𝐚𝐧𝐧𝐞𝐥 𝐛𝐞𝐥𝐨𝐰    ║\n"
-        "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-    )
+    A = """<blockquote><b>༺ 𝐇ɪ𝟸 𝐄ᴍᴀɪʟ 𝐂ʜᴇᴄᴋᴇʀ ༻</b>
+<i>⚡ ᴜʟᴛʀᴀ-ғᴀsᴛ ᴀᴠᴀɪʟᴀʙɪʟɪᴛʏ ɪɴsᴘᴇᴄᴛᴏʀ</i></blockquote>
 
-    keyboard = {
-        "inline_keyboard": [
-            [
-                {"text": "🔹 𝐒𝐢𝐧𝐠𝐥𝐞 𝐌𝐨𝐝𝐞", "callback_data": "mode_single"},
-                {"text": "🔸 𝐁𝐮𝐥𝐤 𝐌𝐨𝐝𝐞", "callback_data": "mode_bulk"}
-            ],
-            [
-                {"text": "📢 𝐉𝐨𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥", "url": "https://t.me/greatemperorrr"}
-            ]
+⟡ <b>𝐒ᴇʟᴇᴄᴛ 𝐘ᴏᴜʀ 𝐌ᴏᴅᴇ</b> ⟡
+
+╭── ✦ <b>𝐒ɪɴɢʟᴇ 𝐂ʜᴇᴄᴋ</b>
+╰➤ <i>ᴄʜᴇᴄᴋ ᴏɴᴇ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ᴇᴍᴀɪʟ</i>
+
+╭── ✦ <b>𝐁ᴜʟᴋ 𝐂ʜᴇᴄᴋ</b>
+╰➤ <i>ᴄʜᴇᴄᴋ ᴍᴜʟᴛɪᴘʟᴇ ᴇᴍᴀɪʟs</i>
+   ⤷ <b>ғᴏʀᴍᴀᴛ:</b> <code>hi2mail1 hi2mail2</code>
+
+<blockquote><i>💡 ᴛᴀᴘ ᴀ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ sᴛᴀʀᴛ</i></blockquote>"""
+    B = {
+        _H: [
+            [{_B: '⚡ 𝐒ɪɴɢʟᴇ 𝐌ᴏᴅᴇ', _J: _j}, {_B: '⚜️ 𝐁ᴜʟᴋ 𝐌ᴏᴅᴇ', _J: _k}],
+            [{_B: _l, _M: _N}]
         ]
     }
-    send_message(chat_id, msg, reply_markup=keyboard)
+    send_message(chat_id, A, reply_markup=B)
 
-def send_single_mode_prompt(chat_id, message_id=None):
-    
-    msg = (
-        "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-        "║     𝐒𝐈𝐍𝐆𝐋𝐄 𝐌𝐎𝐃𝐄 𝐀𝐂𝐓𝐈𝐕𝐀𝐓𝐄𝐃      ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  𝐒𝐞𝐧𝐝 𝐚 𝐮𝐬𝐞𝐫𝐧𝐚𝐦𝐞 (𝐧𝐨 @)      ║\n"
-        "║  𝐓𝐨 𝐜𝐡𝐞𝐜𝐤 𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐢𝐥𝐢𝐭𝐲 𝐨𝐧 :   ║\n"
-        "║     • hi2.in                  ║\n"
-        "║     • telegmail.com           ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  𝐄𝐱𝐚𝐦𝐩𝐥𝐞𝐬 :                 ║\n"
-        "║   john_doe                   ║\n"
-        "║   alex123                    ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  𝐎𝐫 𝐬𝐞𝐧𝐝 𝐟𝐮𝐥𝐥 𝐞𝐦𝐚𝐢𝐥 :        ║\n"
-        "║   user@hi2.in                ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  𝐔𝐬𝐞 /start 𝐭𝐨 𝐜𝐡𝐚𝐧𝐠𝐞 𝐦𝐨𝐝𝐞     ║\n"
-        "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-    )
+def send_single_prompt(chat_id, message_id=_A):
+    B = message_id; A = chat_id
+    C = """<blockquote><b>⚡ 𝐒ɪɴɢʟᴇ 𝐌ᴏᴅᴇ 𝐀ᴄᴛɪᴠᴀᴛᴇᴅ</b></blockquote>
 
-    keyboard = {
-        "inline_keyboard": [
-            [
-                {"text": "⬅️ 𝐁𝐚𝐜𝐤 𝐭𝐨 𝐌𝐚𝐢𝐧 𝐌𝐞𝐧𝐮", "callback_data": "back_menu"}
-            ]
-        ]
-    }
+╭── ✦ <b>𝐄ɴᴛᴇʀ 𝐃ᴇᴛᴀɪʟs</b>
+╰➤ sᴇɴᴅ ᴀ ᴜsᴇʀɴᴀᴍᴇ ᴏʀ ᴇᴍᴀɪʟ
 
-    if message_id:
-        edit_message(chat_id, message_id, msg, reply_markup=keyboard)
-    else:
-        send_message(chat_id, msg, reply_markup=keyboard)
+╭── ✦ <b>𝐄xᴀᴍᴘʟᴇ</b>
+├➤ <code>ruthless</code>
+╰➤ <code>ruthlesshi2.in</code>
 
-def send_bulk_mode_prompt(chat_id, message_id=None):
-    
-    msg = (
-        "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-        "║     𝐁𝐔𝐋𝐊 𝐌𝐎𝐃𝐄 𝐀𝐂𝐓𝐈𝐕𝐀𝐓𝐄𝐃       ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  𝐒𝐞𝐧𝐝 𝐚𝐥𝐥 𝐞𝐦𝐚𝐢𝐥𝐬 𝐢𝐧 𝐨𝐧𝐞 𝐦𝐬𝐠    ║\n"
-        "║  𝐒𝐞𝐩𝐚𝐫𝐚𝐭𝐞𝐝 𝐛𝐲 𝐬𝐩𝐚𝐜𝐞𝐬           ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  𝐅𝐨𝐫𝐦𝐚𝐭 :                    ║\n"
-        "║  user1@domain user2@domain     ║\n"
-        "║  𝐄𝐱𝐚𝐦𝐩𝐥𝐞 :                   ║\n"
-        "║  john@hi2.in jane@telegmail.com ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║  𝐔𝐬𝐞 /start 𝐭𝐨 𝐜𝐡𝐚𝐧𝐠𝐞 𝐦𝐨𝐝𝐞     ║\n"
-        "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-    )
+<blockquote><i>⌁ sᴇɴᴅ /start ᴛᴏ ʀᴇᴛᴜʀɴ ᴛᴏ ᴍᴇɴᴜ</i></blockquote>"""
+    D = {_H: [[{_B: '‹ 𝐁ᴀᴄᴋ ᴛᴏ 𝐌ᴇɴᴜ', _J: _O}]]}
+    if B: edit_message(A, B, C, reply_markup=D)
+    else: send_message(A, C, reply_markup=D)
 
-    keyboard = {
-        "inline_keyboard": [
-            [
-                {"text": "⬅️ 𝐁𝐚𝐜𝐤 𝐭𝐨 𝐌𝐚𝐢𝐧 𝐌𝐞𝐧𝐮", "callback_data": "back_menu"}
-            ]
-        ]
-    }
+def send_bulk_prompt(chat_id, message_id=_A):
+    B = message_id; A = chat_id
+    C = """<blockquote><b>⚜️ 𝐁ᴜʟᴋ 𝐌ᴏᴅᴇ 𝐀ᴄᴛɪᴠᴀᴛᴇᴅ</b></blockquote>
 
-    if message_id:
-        edit_message(chat_id, message_id, msg, reply_markup=keyboard)
-    else:
-        send_message(chat_id, msg, reply_markup=keyboard)
+╭── ✦ <b>ғᴏʀᴍᴀᴛ ɢᴜɪᴅᴇ</b>
+╰➤ sᴇɴᴅ ᴇᴍᴀɪʟs sᴇᴘᴀʀᴀᴛᴇᴅ ʙʏ sᴘᴀᴄᴇs
 
-def process_single_check(chat_id, username):
-    
+╭── ✦ <b>𝐄xᴀᴍᴘʟᴇ</b>
+╰➤ <code>ruthless@hi2.in</code>
 
-    
-    username = username.strip().lower()
+<blockquote><i>⌁ sᴇɴᴅ /start ᴛᴏ ʀᴇᴛᴜʀɴ ᴛᴏ ᴍᴇɴᴜ</i></blockquote>"""
+    D = {_H: [[{_B: '‹ 𝐁ᴀᴄᴋ ᴛᴏ 𝐌ᴇɴᴜ', _J: _O}]]}
+    if B: edit_message(A, B, C, reply_markup=D)
+    else: send_message(A, C, reply_markup=D)
 
-    if "@" in username:
-        parts = username.split("@")
-        domain = parts[1].lower()
+def process_single(chat_id, raw_input):
+    D = chat_id; A = raw_input.strip().lower()
+    if not A: return
+    if _D in A:
+        H, E = A.split(_D, 1)
+        if E not in SUPPORTED_DOMAINS:
+            send_message(D, f"""<blockquote><b>❌ 𝐈ɴᴠᴀʟɪᴅ 𝐃ᴏᴍᴀɪɴ</b></blockquote>
 
-        if domain not in ["hi2.in", "telegmail.com"]:
-            send_message(
-                chat_id,
-                (
-                    "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-                    "║         𝐈𝐍𝐕𝐀𝐋𝐈𝐃 𝐃𝐎𝐌𝐀𝐈𝐍         ║\n"
-                    "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-                    "║  𝐎𝐧𝐥𝐲 : @hi2.in , @telegmail.com  ║\n"
-                    f"║  𝐘𝐨𝐮𝐫 : @{domain}                 \n"
-                    "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-                )
-            )
+<b>sᴜᴘᴘᴏʀᴛᴇᴅ ᴅᴏᴍᴀɪɴs :</b>
+<code>{", ".join(_D + X for X in SUPPORTED_DOMAINS)}</code>
+
+<i>ᴘʟᴇᴀsᴇ ʀᴇᴛʀʏ ᴡɪᴛʜ ᴀ ᴠᴀʟɪᴅ ᴅᴏᴍᴀɪɴ</i>""")
             return
-
-        chosen_domain = domain
-        chosen_user = parts[0]
+        B = f"{H}@{E}"
     else:
-        
-        chosen_user = username
-        domains_to_check = ["hi2.in", "telegmail.com"]
-
-        
-        status_msg = f"<b>🔎 Checking availability for <code>{username}</code>...</b>"
-        send_message(chat_id, status_msg)
-
-        results = []
-        for dom in domains_to_check:
-            email = f"{chosen_user}@{dom}"
-
-            
-            send_message(chat_id, f"〔 ✦ 〕 𝐂𝐡𝐞𝐜𝐤𝐢𝐧𝐠 <code>{email}</code> 〔 ✦ 〕")
-
-            availability = check_email_availability(email, dom)
-
-            if availability == "taken":
-                results.append(f"〔 ✗ 〕 <code>{email}</code> → 𝐓𝐀𝐊𝐄𝐍")
-            elif availability == "not_taken":
-                results.append(f"〔 ✓ 〕 <code>{email}</code> → 𝐍𝐎𝐓 𝐓𝐀𝐊𝐄𝐍")
-            elif availability == "unknown":
-                results.append(f"〔 ! 〕 <code>{email}</code> → 𝐔𝐍𝐊𝐍𝐎𝐖𝐍")
-            else:
-                results.append(f"〔 × 〕 <code>{email}</code> → 𝐄𝐑𝐑𝐎𝐑")
-
-            time.sleep(1)  
-
-        
-        final_msg = (
-            "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-            "║        𝐀𝐕𝐀𝐈𝐋𝐀𝐁𝐈𝐋𝐈𝐓𝐘 𝐑𝐄𝐏𝐎𝐑𝐓        ║\n"
-            "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-            f"║  𝐔𝐬𝐞𝐫𝐧𝐚𝐦𝐞 : {chosen_user}              \n"
-            "╠═══━━━───〔 ✦ 〕───━━━═══╣\n" +
-            "\n".join(f"║  {line}" for line in results) + "\n"
-            "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-            "║  𝐉𝐨𝐢𝐧 : @greatemperorrr                 ║\n"
-            "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-        )
-        keyboard = {
-            "inline_keyboard": [
-                [{"text": "📢 𝐉𝐨𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥", "url": "https://t.me/greatemperorrr"}]
-            ]
-        }
-        send_message(chat_id, final_msg, reply_markup=keyboard)
-        return
-
-    email = f"{chosen_user}@{chosen_domain}"
-
-    send_message(chat_id, f"〔 ✦ 〕 𝐂𝐡𝐞𝐜𝐤𝐢𝐧𝐠 <code>{email}</code> 〔 ✦ 〕")
-
-    availability = check_email_availability(email, chosen_domain)
-
-    if availability == "taken":
-        result_text = "〔 ✗ 〕 𝐓𝐀𝐊𝐄𝐍"
-    elif availability == "not_taken":
-        result_text = "〔 ✓ 〕 𝐍𝐎𝐓 𝐓𝐀𝐊𝐄𝐍"
-    elif availability == "unknown":
-        result_text = "〔 ! 〕 𝐔𝐍𝐊𝐍𝐎𝐖𝐍 (Error Checking)"
+        B = f"{A}@hi2.in"
+    F = threading.Event()
+    I = animate_check(D, B, F)
+    G = check_hi2_email(B)
+    F.set()
+    if G == _E:
+        C = '🔴 <b>𝐓ᴀᴋᴇɴ</b>'
+        badge = '<code>OCCUPIED</code>'
+    elif G == _G:
+        C = '🟢 <b>𝐍ᴏᴛ 𝐓ᴀᴋᴇɴ</b>'
+        badge = '<code>AVAILABLE</code>'
     else:
-        result_text = "〔 × 〕 𝐄𝐑𝐑𝐎𝐑"
-
-    final_msg = (
-        f"╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-        f"║        𝐀𝐕𝐀𝐈𝐋𝐀𝐁𝐈𝐋𝐈𝐓𝐘 𝐑𝐄𝐏𝐎𝐑𝐓        ║\n"
-        f"╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        f"║  𝐄𝐦𝐚𝐢𝐥   : {email}\n"
-        f"║  𝐃𝐨𝐦𝐚𝐢𝐧  : @{chosen_domain}\n"
-        f"║  𝐒𝐭𝐚𝐭𝐮𝐬  : {result_text}\n"
-        f"╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        f"║  𝐉𝐨𝐢𝐧 : @greatemperorrr                 ║\n"
-        f"╚═══━━━───〔 ✦ 〕───━━━═══╝"
-    )
-    keyboard = {
-        "inline_keyboard": [
-            [{"text": "📢 𝐉𝐨𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥", "url": "https://t.me/greatemperorrr"}]
-        ]
-    }
-    send_message(chat_id, final_msg, reply_markup=keyboard)
-
-def process_bulk_check(chat_id, text):
+        C = '🟡 <b>𝐔ɴᴋɴᴏᴡɴ</b>'
+        badge = '<code>UNKNOWN</code>'
     
-    
-    raw_emails = text.strip().split()
-    emails = [e.strip().lower() for e in raw_emails if e.strip()]
+    J = f"""<blockquote><b>📊 𝐀ᴠᴀɪʟᴀʙɪʟɪᴛʏ 𝐑ᴇᴘᴏʀᴛ</b></blockquote>
 
-    
-    valid_emails = []
-    invalid_entries = []
-    for entry in emails:
-        if "@" in entry:
-            parts = entry.split("@")
-            domain = parts[1].lower()
-            if domain in ["hi2.in", "telegmail.com"]:
-                valid_emails.append(entry)
-            else:
-                invalid_entries.append(f"{entry} (invalid domain)")
+╭── 📧 <b>𝐄ᴍᴀɪʟ :</b> <code>{B}</code>
+╰── 📌 <b>𝐒ᴛᴀᴛᴜs :</b> {C}  [{badge}]
+
+<blockquote><i>⚡ ᴠᴇʀɪғɪᴇᴅ ᴠɪᴀ ʜɪ𝟸 ᴇɴɢɪɴᴇ</i></blockquote>"""
+    K = {_H: [[{_B: _l, _M: _N}]]}
+    I(J)
+
+def process_bulk(chat_id, text):
+    C = chat_id; M = text.replace(',', ' ').split(); H, B, D = set(), [], []
+    for A in M:
+        A = A.strip().lower()
+        if not A or A in H: continue
+        H.add(A)
+        if _D in A:
+            R, N = A.split(_D, 1)
+            if N in SUPPORTED_DOMAINS: B.append(A)
+            else: D.append(f"{A} (bad domain)")
         else:
-            invalid_entries.append(f"{entry} (missing @)")
+            B.append(f"{A}@hi2.in")
+    if not B:
+        send_message(C, """<blockquote><b>❌ 𝐍ᴏ 𝐕ᴀʟɪᴅ 𝐄ᴍᴀɪʟs 𝐅ᴏᴜɴᴅ</b></blockquote>
 
-    if not valid_emails:
-        send_message(
-            chat_id,
-            "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-            "║    𝐍𝐎 𝐕𝐀𝐋𝐈𝐃 𝐄𝐌𝐀𝐈𝐋𝐒 𝐅𝐎𝐔𝐍𝐃      ║\n"
-            "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-            "║  𝐔𝐬𝐞 𝐟𝐨𝐫𝐦𝐚𝐭:                   ║\n"
-            "║  user1@hi2.in user2@telegmail.com ║\n"
-            "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-        )
+╭── 💡 <b>𝐄xᴀᴍᴘʟᴇ</b>
+╰➤ <code>user@hi2.in user2</code>""")
         return
+    send_message(C, f"""<blockquote><b>🔎 𝐁ᴜʟᴋ 𝐂ʜᴇᴄᴋ 𝐒ᴛᴀʀᴛᴇᴅ</b></blockquote>
 
-    
-    start_msg = (
-        f"╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-        f"║     𝐁𝐔𝐋𝐊 𝐂𝐇𝐄𝐂𝐊 𝐒𝐓𝐀𝐑𝐓𝐄𝐃        ║\n"
-        f"╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        f"║  𝐓𝐨𝐭𝐚𝐥 : {len(valid_emails)} 𝐞𝐦𝐚𝐢𝐥(𝐬)        ║\n"
-        f"╚═══━━━───〔 ✦ 〕───━━━═══╝"
-    )
-    send_message(chat_id, start_msg)
+╭── ⚡ <b>ᴛᴏᴛᴀʟ :</b> <code>{len(B)} emails</code>
+╰── ⏳ <i>ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...</i>""")
+    I = []
+    for (O, E) in enumerate(B, 1):
+        J = threading.Event()
+        P = animate_check(C, E, J)
+        K = check_hi2_email(E)
+        J.set()
+        if K == _E: F, G = '🔴', '𝐓ᴀᴋᴇɴ'
+        elif K == _G: F, G = '🟢', '𝐅ʀᴇᴇ'
+        else: F, G = '🟡', '𝐔ɴᴋɴᴏᴡɴ'
+        L = f"<code>{O:02d}.</code> {F} <code>{E}</code> ➔ <b>{G}</b>"
+        I.append(L)
+        P(L)
+        time.sleep(1.0)
+    Q = f"""<blockquote><b>📊 𝐁ᴜʟᴋ 𝐑ᴇᴘᴏʀᴛ</b></blockquote>
 
-    results = []
-    processed = 0
+""" + '\n'.join(I) + f"""
 
-    for email in valid_emails:
-        domain = email.split("@")[1].lower()
-        parts = email.split("@")
-        chosen_user = parts[0]
-        chosen_domain = parts[1].lower()
+╭── ✅ <b>𝐓ᴏᴛᴀʟ 𝐂ʜᴇᴄᴋᴇᴅ :</b> <code>{len(B)}</code>
+╰── 📢 <b>𝐂ʜᴀɴɴᴇʟ :</b>t.me/ruthless_era
 
-        
-        send_message(chat_id, f"〔 {processed+1}/{len(valid_emails)} 〕 𝐂𝐡𝐞𝐜𝐤𝐢𝐧𝐠 <code>{email}</code>")
-
-        availability = check_email_availability(email, chosen_domain)
-
-        if availability == "taken":
-            results.append(f"〔 ✗ 〕 <code>{email}</code> → 𝐓𝐀𝐊𝐄𝐍")
-        elif availability == "not_taken":
-            results.append(f"〔 ✓ 〕 <code>{email}</code> → 𝐍𝐎𝐓 𝐓𝐀𝐊𝐄𝐍")
-        elif availability == "unknown":
-            results.append(f"〔 ! 〕 <code>{email}</code> → 𝐔𝐍𝐊𝐍𝐎𝐖𝐍")
-        else:
-            results.append(f"〔 × 〕 <code>{email}</code> → 𝐄𝐑𝐑𝐎𝐑")
-
-        processed += 1
-        time.sleep(1)  
-
-    
-    lines = []
-    for i, r in enumerate(results, 1):
-        lines.append(f"║  {i}. {r}")
-
-    final_msg = (
-        "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-        "║     𝐁𝐔𝐋𝐊 𝐀𝐕𝐀𝐈𝐋𝐀𝐁𝐈𝐋𝐈𝐓𝐘 𝐑𝐄𝐏𝐎𝐑𝐓     ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n" +
-        "\n".join(lines) + "\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        f"║  𝐓𝐨𝐭𝐚𝐥 : {len(valid_emails)} 𝐜𝐡𝐞𝐜𝐤𝐞𝐝                ║\n"
-        "║  𝐉𝐨𝐢𝐧 : @greatemperorrr                 ║\n"
-        "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-    )
-    keyboard = {
-        "inline_keyboard": [
-            [{"text": "📢 𝐉𝐨𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥", "url": "https://t.me/greatemperorrr"}]
-        ]
-    }
-    send_message(chat_id, final_msg, reply_markup=keyboard)
-
-    
-    if invalid_entries:
-        inv_msg = (
-            "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-            "║     𝐈𝐍𝐕𝐀𝐋𝐈𝐃 𝐄𝐍𝐓𝐑𝐈𝐄𝐒 𝐒𝐊𝐈𝐏𝐏𝐄𝐃    ║\n"
-            "╠═══━━━───〔 ✦ 〕───━━━═══╣\n" +
-            "\n".join(f"║  • {e}" for e in invalid_entries) + "\n"
-            "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-        )
-        send_message(chat_id, inv_msg)
-
+<blockquote><i>⚡ sᴄᴀɴ ᴄᴏᴍᴘʟᴇᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ</i></blockquote>"""
+    send_message(C, Q, reply_markup={_H: [[{_B: _l, _M: _N}]]})
+    if D:
+        send_message(C, "<blockquote><b>⚠️ 𝐒ᴋɪᴘᴘᴇᴅ 𝐄ɴᴛʀɪᴇs</b></blockquote>\n\n" + '\n'.join(f"• <code>{A}</code>" for A in D))
 
 def run_bot():
-    print(
-        "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-        "║        𝐁𝐎𝐓 𝐒𝐓𝐀𝐑𝐓𝐄𝐃        ║\n"
-        "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-        "║   ✓ 𝐋𝐢𝐬𝐭𝐞𝐧𝐢𝐧𝐠 𝐟𝐨𝐫 𝐦𝐞𝐬𝐬𝐚𝐠𝐞𝐬   ║\n"
-        "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-    )
-
-    last_update_id = 0
-    
-    user_modes = {}  
-
-    
-    bot_messages = {}
-
-    while True:
+    P = 'bulk'; O = 'single'; N = 'chat'; M = 'callback_query'; F = 'message'; G = 0; C = {}
+    while _I:
         try:
-            updates = get_updates(offset=last_update_id + 1)
-
-            for update in updates:
-                update_id = update.get("update_id")
-                if update_id and update_id >= last_update_id:
-                    last_update_id = update_id
-
-                
-                if "callback_query" in update:
-                    cq = update["callback_query"]
-                    chat_id = cq["message"]["chat"]["id"]
-                    message_id = cq["message"]["message_id"]
-                    callback_data = cq.get("data", "")
-                    callback_id = cq["id"]
-
-                    
-                    answer_callback(update_id, callback_id)
-
-                    if callback_data == "mode_single":
-                        user_modes[chat_id] = "single"
-                        send_single_mode_prompt(chat_id, message_id)
-
-                    elif callback_data == "mode_bulk":
-                        user_modes[chat_id] = "bulk"
-                        send_bulk_mode_prompt(chat_id, message_id)
-
-                    elif callback_data == "back_menu":
-                        user_modes[chat_id] = None
-                        
-                        msg = (
-                            "╔═══━━━───〔 ✦ 〕───━━━═══╗\n"
-                            "║   𝐇𝐈2 & 𝐓𝐄𝐋𝐄𝐆𝐌𝐀𝐈𝐋 𝐂𝐇𝐄𝐂𝐊𝐄𝐑   ║\n"
-                            "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-                            "║       𝐒𝐄𝐋𝐄𝐂𝐓 𝐌𝐎𝐃𝐄 𝐁𝐄𝐋𝐎𝐖       ║\n"
-                            "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-                            "║  【1】 𝐒𝐢𝐧𝐠𝐥𝐞 𝐂𝐡𝐞𝐜𝐤         ║\n"
-                            "║  → 𝐂𝐡𝐞𝐜𝐤 𝟏 𝐮𝐬𝐞𝐫𝐧𝐚𝐦𝐞/𝐞𝐦𝐚𝐢𝐥     ║\n"
-                            "║                              ║\n"
-                            "║  【2】 𝐁𝐮𝐥𝐤 𝐂𝐡𝐞𝐜𝐤           ║\n"
-                            "║  → 𝐂𝐡𝐞𝐜𝐤 𝐦𝐮𝐥𝐭𝐢𝐩𝐥𝐞 𝐞𝐦𝐚𝐢𝐥𝐬    ║\n"
-                            "║  → 𝐅𝐨𝐫𝐦𝐚𝐭: mail1 mail2    ║\n"
-                            "╠═══━━━───〔 ✦ 〕───━━━═══╣\n"
-                            "║  𝐅𝐨𝐥𝐥𝐨𝐰 𝐨𝐮𝐫 𝐜𝐡𝐚𝐧𝐧𝐞𝐥 𝐛𝐞𝐥𝐨𝐰    ║\n"
-                            "╚═══━━━───〔 ✦ 〕───━━━═══╝"
-                        )
-                        keyboard = {
-                            "inline_keyboard": [
-                                [
-                                    {"text": "🔹 𝐒𝐢𝐧𝐠𝐥𝐞 𝐌𝐨𝐝𝐞", "callback_data": "mode_single"},
-                                    {"text": "🔸 𝐁𝐮𝐥𝐤 𝐌𝐨𝐝𝐞", "callback_data": "mode_bulk"}
-                                ],
-                                [
-                                    {"text": "📢 𝐉𝐨𝐢𝐧 𝐂𝐡𝐚𝐧𝐧𝐞𝐥", "url": "https://t.me/greatemperorrr"}
-                                ]
-                            ]
-                        }
-                        edit_message(chat_id, message_id, msg, reply_markup=keyboard)
-
-                
-                elif "message" in update:
-                    msg = update["message"]
-                    chat_id = msg["chat"]["id"]
-                    text = msg.get("text", "")
-
-                   
-                    if text == "/start":
-                        user_modes[chat_id] = None
-                        send_welcome(chat_id)
-
-                    
-                    elif text == "/help":
-                        send_welcome(chat_id)
-
-                    
-                    elif text and not text.startswith("/"):
-                        current_mode = user_modes.get(chat_id)
-
-                        if current_mode is None:
-                            
-                            send_welcome(chat_id)
-                        elif current_mode == "single":
-                            process_single_check(chat_id, text)
-                        elif current_mode == "bulk":
-                            process_bulk_check(chat_id, text)
-
+            Q = get_updates(offset=G + 1)
+            for D in Q:
+                H = D.get('update_id')
+                if H and H >= G: G = H
+                if M in D:
+                    E = D[M]; A = E[F][N][_C]; J = E[F][_L]; I = E.get('data', ''); answer_callback(E[_C])
+                    if I == _j: C[A] = O; send_single_prompt(A, J)
+                    elif I == _k: C[A] = P; send_bulk_prompt(A, J)
+                    elif I == _O: C.pop(A, _A); send_welcome(A)
+                elif F in D:
+                    K = D[F]; A = K[N][_C]; B = (K.get(_B) or '').strip()
+                    if B == '/start' or B == '/help': C.pop(A, _A); send_welcome(A); continue
+                    if not B or B.startswith('/'): continue
+                    L = C.get(A)
+                    if L == O: process_single(A, B)
+                    elif L == P: process_bulk(A, B)
+                    else: send_welcome(A)
             time.sleep(1)
-
         except KeyboardInterrupt:
-            print(f"\n{fg_red}{bold}[!] Bot shutting down...{reset}")
-            
-            for cid in list(user_modes.keys()):
-                send_message(cid, "🔴 Bot is shutting down. Goodbye!")
+            print(f"\n{spy28}[!] shutdown{reset}")
             break
-        except Exception as e:
-            print(f"{fg_red}{bold}[!] Error: {e}{reset}")
-            time.sleep(5)
+        except Exception as R:
+            print(f"{spy28}[!] error: {R}{reset}")
+            time.sleep(4)
 
-
-if __name__ == "__main__":
-    
+if __name__ == '__main__':
     os.system('cls' if os.name == 'nt' else 'clear')
-
-    
-    banner = f"""
-{fg_lavender}╔═✦═✦═〔 𝐁𝐎𝐓 𝐒𝐓𝐀𝐓𝐔𝐒 〕═✦═✦═╗{reset}
-{fg_lavender}║{reset}
-{fg_lavender}║{reset}  {fg_cyan}⌁ 𝐂𝐇𝐀𝐍𝐍𝐄𝐋 ➜{reset} {fg_magenta}@greatemperorrr{reset}
-{fg_lavender}║{reset}  {fg_cyan}⌁ 𝐃𝐄𝐕 ➜{reset} {fg_magenta}@CHAMMMAK_CHALLO{reset}
-{fg_lavender}║{reset}
-{fg_lavender}║{reset}  {fg_gold}⌁ 𝐁𝐎𝐓 𝐈𝐒{reset} {fg_green}𝐑𝐔𝐍𝐍𝐈𝐍𝐆{reset}
-{fg_lavender}║{reset}
-{fg_lavender}╚═✦═✦═✦═✦═✦═✦═✦═✦═✦═╝{reset}
-"""
-    print(banner)
-
+    print(f"""{spy1}{bold}
+    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃     ✦ 𝐇ɪ𝟸 𝐄ᴍᴀɪʟ 𝐂ʜᴇᴄᴋᴇʀ ✦          ┃
+    ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+    ┃  ⚡ ᴅᴇᴠ     ➜ {spy2}@btw_arbazzz{spy1}           ┃
+    ┃  ⚡ sᴛᴀᴛᴜs  ➜ {spy4}𝐑ᴜɴɴɪɴɢ 𝟸𝟺/𝟽{spy1}           ┃
+    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+{reset}""")
     run_bot()
+                    
